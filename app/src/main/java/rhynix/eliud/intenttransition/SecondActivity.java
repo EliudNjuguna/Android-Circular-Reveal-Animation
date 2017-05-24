@@ -4,7 +4,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.constraint.solver.widgets.Animator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
+import android.animation.Animator;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -62,7 +62,7 @@ public class SecondActivity extends AppCompatActivity {
             float finalRadius = (float) (Math.max(rootLayout.getWidth(), rootLayout.getHeight()) * 1.1);
 
             // create the animator for this view (the start radius is zero)
-            android.animation.Animator circularReveal = ViewAnimationUtils.createCircularReveal(rootLayout, revealX, revealY, 0, finalRadius);
+            Animator circularReveal = ViewAnimationUtils.createCircularReveal(rootLayout, x, y, 0, finalRadius);
             circularReveal.setDuration(600);
             circularReveal.setInterpolator(new AccelerateInterpolator());
 
@@ -79,12 +79,13 @@ public class SecondActivity extends AppCompatActivity {
             finish();
         } else {
             float finalRadius = (float) (Math.max(rootLayout.getWidth(), rootLayout.getHeight()) * 1.1);
-            android.animation.Animator circularReveal = ViewAnimationUtils.createCircularReveal(rootLayout, revealX, revealY, finalRadius, 0);
+            Animator circularReveal = ViewAnimationUtils.createCircularReveal(
+                    rootLayout, revealX, revealY, finalRadius, 0);
 
             circularReveal.setDuration(600);
             circularReveal.addListener(new AnimatorListenerAdapter() {
-                //@Override
-                public void onAnimationEnd(Animator animation) {
+                @Override
+                public void onAnimationEnd(android.animation.Animator animation) {
                     rootLayout.setVisibility(View.INVISIBLE);
                     finish();
                 }
